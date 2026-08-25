@@ -54,7 +54,7 @@ export default function DocumentationFormModal() {
     setErreur('');
 
     try {
-      const res = await fetch('/api/send-documentation.php', {
+      const res = await fetch('/api/send-documentation', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nom_complet: nomComplet, email, lang: language, doc_lang: docLang }),
