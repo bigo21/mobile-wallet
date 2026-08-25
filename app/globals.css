@@ -7,13 +7,9 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Le site est conçu en thème clair uniquement : on force le rendu clair,
+     y compris pour les champs de formulaire, quel que soit le mode de l'OS. */
+  color-scheme: light;
 }
 
 html {

@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function ContactSecurityFooterSection() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -73,7 +73,7 @@ export default function ContactSecurityFooterSection() {
     setSubmitSuccess(false);
 
     try {
-      const res = await fetch('/api/send-contact', {
+      const res = await fetch('/api/send-contact.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -81,6 +81,7 @@ export default function ContactSecurityFooterSection() {
           phone: selectedCountry.code
             ? `+${selectedCountry.code} ${formData.phone}`
             : formData.phone,
+          lang: language,
         }),
       });
       const data = await res.json();
@@ -355,7 +356,7 @@ export default function ContactSecurityFooterSection() {
                           value={formData.name}
                           onChange={handleChange}
                           required
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F9A825] focus:border-transparent outline-none"
+                          className="w-full px-4 py-3 bg-white text-gray-900 placeholder-gray-400 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F9A825] focus:border-transparent outline-none"
                         />
                       </div>
 
@@ -371,7 +372,7 @@ export default function ContactSecurityFooterSection() {
                           value={formData.email}
                           onChange={handleChange}
                           required
-                          className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#F9A825] focus:border-transparent outline-none ${
+                          className={`w-full px-4 py-3 bg-white text-gray-900 placeholder-gray-400 border rounded-lg focus:ring-2 focus:ring-[#F9A825] focus:border-transparent outline-none ${
                             errors.email ? 'border-red-500' : 'border-gray-300'
                           }`}
                         />
@@ -388,7 +389,7 @@ export default function ContactSecurityFooterSection() {
                           name="country"
                           value={formData.country}
                           onChange={handleChange}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F9A825] focus:border-transparent outline-none"
+                          className="w-full px-4 py-3 bg-white text-gray-900 placeholder-gray-400 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F9A825] focus:border-transparent outline-none"
                         >
                           {countries.map((country) => (
                             <option key={country.name} value={country.name}>
@@ -419,7 +420,7 @@ export default function ContactSecurityFooterSection() {
                             onChange={handleChange}
                             required
                             placeholder={selectedCountry.code ? '6 12 34 56 78' : 'Indicatif + numéro'}
-                            className={`flex-1 px-4 py-3 border rounded-r-lg focus:ring-2 focus:ring-[#F9A825] focus:border-transparent outline-none ${
+                            className={`flex-1 px-4 py-3 bg-white text-gray-900 placeholder-gray-400 border rounded-r-lg focus:ring-2 focus:ring-[#F9A825] focus:border-transparent outline-none ${
                               errors.phone ? 'border-red-500' : 'border-gray-300'
                             }`}
                           />
@@ -439,7 +440,7 @@ export default function ContactSecurityFooterSection() {
                           onChange={handleChange}
                           rows={4}
                           placeholder={t.contactForm.messagePlaceholder}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F9A825] focus:border-transparent outline-none resize-none"
+                          className="w-full px-4 py-3 bg-white text-gray-900 placeholder-gray-400 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F9A825] focus:border-transparent outline-none resize-none"
                         />
                       </div>
 

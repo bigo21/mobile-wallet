@@ -49,22 +49,6 @@ export default function Hero() {
               >
                 {t.hero.ctaPlans}
               </Link>
-              <button
-                type="button"
-                onClick={() => window.dispatchEvent(new CustomEvent('openPresentationModal'))}
-                className="flex items-center justify-center gap-2 text-white hover:text-[#F9A825] transition-colors group hover:scale-105"
-              >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="currentColor"
-                  className="text-[#F9A825] group-hover:text-[#FFD54F]"
-                >
-                  <path d="M8 0L6.59 1.41L12.17 7H0v2h12.17l-5.58 5.59L8 16l8-8z" />
-                </svg>
-                <span>{t.hero.ctaDiscover}</span>
-              </button>
             </div>
             </AnimateOnScroll>
           </div>

@@ -33,3 +33,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# repomix (dumps générés)
+repomix-output.xml

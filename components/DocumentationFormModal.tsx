@@ -3,12 +3,14 @@
 import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { useLanguage } from '@/contexts/LanguageContext';
+import type { Language } from '@/lib/translations';
 
 export default function DocumentationFormModal() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [nomComplet, setNomComplet] = useState('');
   const [email, setEmail] = useState('');
+  const [docLang, setDocLang] = useState<Language>(language);
   const [loading, setLoading] = useState(false);
   const [messageEnvoye, setMessageEnvoye] = useState(false);
   const [erreur, setErreur] = useState('');
@@ -26,6 +28,11 @@ export default function DocumentationFormModal() {
     window.addEventListener('openDocumentationModal', handleOpen);
     return () => window.removeEventListener('openDocumentationModal', handleOpen);
   }, []);
+
+  // Le sélecteur de langue du document part par défaut sur la langue du site.
+  useEffect(() => {
+    if (isOpen) setDocLang(language);
+  }, [isOpen, language]);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -47,10 +54,10 @@ export default function DocumentationFormModal() {
     setErreur('');
 
     try {
-      const res = await fetch('/api/send-documentation', {
+      const res = await fetch('/api/send-documentation.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nom_complet: nomComplet, email }),
+        body: JSON.stringify({ nom_complet: nomComplet, email, lang: language, doc_lang: docLang }),
       });
       const data = await res.json();
 
@@ -122,7 +129,7 @@ export default function DocumentationFormModal() {
                   value={nomComplet}
                   onChange={(e) => setNomComplet(e.target.value)}
                   placeholder="Jean Dupont"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F9A825] focus:border-[#F9A825] outline-none"
+                  className="w-full px-4 py-3 bg-white text-gray-900 placeholder-gray-400 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F9A825] focus:border-[#F9A825] outline-none"
                   required
                 />
               </div>
@@ -136,9 +143,30 @@ export default function DocumentationFormModal() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="jean@exemple.com"
-                  className="w-full px-4 py-3 border-2 border-[#F9A825] rounded-lg focus:ring-2 focus:ring-[#F9A825] focus:border-[#F9A825] outline-none"
+                  className="w-full px-4 py-3 bg-white text-gray-900 placeholder-gray-400 border-2 border-[#F9A825] rounded-lg focus:ring-2 focus:ring-[#F9A825] focus:border-[#F9A825] outline-none"
                   required
                 />
+              </div>
+              <div>
+                <span className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
+                  {t.contact.docLangLabel}
+                </span>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setDocLang('fr')}
+                    className={`flex-1 py-2.5 rounded-lg text-sm font-semibold border transition-colors ${docLang === 'fr' ? 'bg-[#F9A825] border-[#F9A825] text-black' : 'bg-white border-gray-300 text-gray-700 hover:border-[#F9A825]'}`}
+                  >
+                    Français
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setDocLang('en')}
+                    className={`flex-1 py-2.5 rounded-lg text-sm font-semibold border transition-colors ${docLang === 'en' ? 'bg-[#F9A825] border-[#F9A825] text-black' : 'bg-white border-gray-300 text-gray-700 hover:border-[#F9A825]'}`}
+                  >
+                    English
+                  </button>
+                </div>
               </div>
               <button
                 type="submit"

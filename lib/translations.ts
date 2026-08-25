@@ -115,6 +115,7 @@ export const translations = {
       success: '✓ Merci ! Votre demande a été envoyée. Vous recevrez le document par email.',
       privacy: 'Vos données sont confidentielles et ne seront jamais partagées avec des tiers.',
       errorConnect: 'Une erreur est survenue. Vérifiez votre connexion et réessayez.',
+      docLangLabel: 'LANGUE DU DOCUMENT',
     },
     docModal: {
       title: 'Accédez à notre documentation',
@@ -467,6 +468,7 @@ export const translations = {
       success: '✓ Thank you! Your request has been sent. You will receive the document by email.',
       privacy: 'Your data is confidential and will never be shared with third parties.',
       errorConnect: 'An error occurred. Check your connection and try again.',
+      docLangLabel: 'DOCUMENT LANGUAGE',
     },
     docModal: {
       title: 'Access our documentation',
