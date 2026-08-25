@@ -44,6 +44,62 @@ export async function saveLead(d: LeadInput): Promise<number | null> {
   }
 }
 
+export type LeadRow = {
+  id: number;
+  type: string;
+  name: string;
+  email: string;
+  country: string | null;
+  phone: string | null;
+  message: string | null;
+  lang: string;
+  doc_lang: string | null;
+  ip: string | null;
+  user_agent: string | null;
+  download_count: number;
+  downloaded_at: string | null;
+  created_at: string;
+};
+
+export type DownloadRow = {
+  id: number;
+  ip: string | null;
+  user_agent: string | null;
+  created_at: string;
+};
+
+const LEAD_TYPES = ['contact', 'presentation', 'documentation'];
+
+/** Liste les leads (optionnellement filtrés par type), les plus récents d'abord. */
+export async function getLeads(type?: string): Promise<LeadRow[]> {
+  if (type && LEAD_TYPES.includes(type)) {
+    return sql<LeadRow[]>`select * from mobilewallet.leads where type = ${type} order by created_at desc limit 2000`;
+  }
+  return sql<LeadRow[]>`select * from mobilewallet.leads order by created_at desc limit 2000`;
+}
+
+/** Compte les leads par type. */
+export async function getLeadCounts(): Promise<Record<string, number>> {
+  const rows = await sql<{ type: string; n: number }[]>`
+    select type, count(*)::int as n from mobilewallet.leads group by type`;
+  const out: Record<string, number> = { contact: 0, presentation: 0, documentation: 0 };
+  for (const r of rows) out[r.type] = Number(r.n);
+  return out;
+}
+
+/** Un lead par id. */
+export async function getLead(id: number): Promise<LeadRow | null> {
+  const rows = await sql<LeadRow[]>`select * from mobilewallet.leads where id = ${id} limit 1`;
+  return rows[0] ?? null;
+}
+
+/** Historique des téléchargements d'un lead. */
+export async function getDownloads(leadId: number): Promise<DownloadRow[]> {
+  return sql<DownloadRow[]>`
+    select id, ip, user_agent, created_at from mobilewallet.downloads
+    where lead_id = ${leadId} order by created_at desc`;
+}
+
 /** Enregistre un téléchargement (compteur sur le lead + ligne de détail). */
 export async function trackDownload(
   token: string,
