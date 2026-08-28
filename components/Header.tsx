@@ -46,10 +46,10 @@ export default function Header() {
           <Image
             src="/images/logo_mw.png"
             alt="MobileWallet"
-            width={180}
-            height={60}
-            className="h-7 sm:h-8 md:h-12 lg:h-16 w-auto"
-            style={{ width: 'auto', height: 'auto' }}
+            width={150}
+            height={150}
+            className="h-9 sm:h-10 md:h-12 lg:h-14 w-auto"
+            style={{ width: 'auto' }}
             priority
           />
         </Link>
