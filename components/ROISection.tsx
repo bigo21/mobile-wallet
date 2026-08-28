@@ -48,8 +48,9 @@ export default function ROISection() {
           </div>
         )}
 
-        {/* En-tête : icône (orange sur cartes grises, noir sur cartes orange) + titre, puis trait horizontal */}
-        <div className={`flex items-center gap-3 pb-4 border-b ${isMulti ? 'border-white/30' : 'border-gray-500/50'}`}>
+        {/* En-tête : icône (orange sur cartes grises, noir sur cartes orange) + titre, puis trait horizontal.
+            Sur mobile, si un badge est présent, on décale le titre vers le bas pour éviter qu'il passe sous le badge. */}
+        <div className={`flex items-center gap-3 pb-4 border-b ${data.badge ? 'pt-10 md:pt-0' : ''} ${isMulti ? 'border-white/30' : 'border-gray-500/50'}`}>
           <span className={`flex items-center gap-0.5 shrink-0 ${isMulti ? 'text-black' : 'text-[#F9A825]'}`} aria-hidden>
             {data.type === 'mono' ? (
               Array.from({ length: data.iconCount || 1 }).map((_, i) => (
