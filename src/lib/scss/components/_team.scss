@@ -1,0 +1,416 @@
+/* Team Area Style
+============================================*/
+.team-single-item {
+    transition: $transition;
+
+    .team-img {
+        img {
+            border-radius: 20px;
+        }
+        ul {
+            padding: 25px !important;
+            transition: $transition;
+            opacity: 0;
+
+            li {
+                margin-bottom: 10px;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+                a {
+                    width: 40px;
+                    height: 40px;
+                    line-height: 42px;
+                    text-align: center;
+                    border-radius: 50px;
+                    background-color: $white;
+                    display: inline-block;
+                    font-size: 18px;
+
+                    &:hover {
+                        background-color: $primary;
+                        color: $secondary;
+                    }
+                }
+            }
+        }
+    }
+    .team-content {
+        text-align: center;
+        margin-top: 30px;
+
+        h3 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+    }
+    &:hover {
+        transform: translateY(-5px);
+        .team-img {
+            ul {
+                opacity: 1;
+            }
+        }
+    }
+}
+.team-img {
+    img {
+        border-radius: 30px;
+    }
+}
+.team-details-content {
+    h2 {
+        font-size: 36px;
+        margin-bottom: 10px;
+    }
+    .defamation {
+        font-size: 16px;
+        display: block;
+        margin-bottom: 35px;
+        display: inline-block;
+    }
+    h3 {
+        font-size: 24px;
+        margin-bottom: 10px;
+        margin-top: 30px;
+    }
+    .link {
+        text-decoration: none;
+    }
+    ul {
+        li {
+            margin-bottom: 10px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+            .icon {
+                width: 40px;
+                height: 40px;
+                line-height: 40px;
+                text-align: center;
+                display: inline-block;
+                background-color: #E8F1F6;
+                border-radius: 100px;
+                color: $secondary;
+
+                &:hover {
+                    background-color: $primary;
+                    color: $secondary;
+                }
+            }
+        }
+    }
+}
+.team-career-content {
+    h3 {
+        font-size: 24px;
+        padding-bottom: 15px;
+        margin-bottom: 25px;
+        border-bottom: 1px solid rgba(1, 63, 85, 0.18);
+        position: relative;
+
+        &::before {
+            content: "";
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 200px;
+            height: 1px;
+            background-color: $secondary;
+        }
+    }
+    .progress {
+        background-color: rgba(18, 18, 18, 0.1);
+    }
+}
+
+.team-comment-form {
+    border-radius: 20px;
+    background-color: #EFF6FF;
+    padding: 40px;
+
+    h3 {
+        margin-bottom: 10px;
+        font-size: 24px;
+    }
+    p {
+        margin-bottom: 30px;
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width: 767px) {
+    .team-single-item {
+        .team-content {
+            margin-top: 25px;
+
+            h3 {
+                font-size: 20px;
+                margin-bottom: 0;
+            }
+        }
+    }
+    .team-details-content {
+        h2 {
+            font-size: 25px;
+        }
+        .defamation {
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+        h3 {
+            font-size: 20px;
+        }
+    }
+}
+
+/* Min width 768px to Max width 992px */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .team-single-item {
+        .team-content {
+            margin-top: 25px;
+
+            h3 {
+                font-size: 22px;
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width: 992px) and (max-width: 1199px)  {
+    .team-single-item {
+        .team-content {
+            margin-top: 25px;
+
+            h3 {
+                font-size: 20px;
+                margin-bottom: 0;
+            }
+            span {
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+@media (min-width: 1399px) {
+    .mw-666 {
+        max-width: 666px;
+    }
+}
+
+/* RTL Area Style
+============================================*/
+.rtl {
+    .team-career-content {
+        h3 {
+            &::before {
+                left: auto;
+                right: 0;
+            }
+        }
+    }
+}
+
+/* Dark Mode Area Style
+============================================ */
+[for-dark-light-data-mode=for-dark] {
+
+    .team-comment-form {
+        background-color: $dark-card-bg;
+    }
+
+}
+/* Team Arch Area Style
+============================================*/
+.team-arch-area {
+    // The ribbon runs wider than the container
+    overflow-x: clip;
+
+    .team-arch-intro {
+        max-width: 680px;
+        margin: -20px auto 70px;
+        font-size: 17px;
+    }
+}
+.team-arch-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+}
+.team-arch-row {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    position: relative;
+    z-index: 1;
+}
+.team-arch-card {
+    position: relative;
+    width: 240px;
+    padding-bottom: 28px;
+
+    &:hover {
+        .team-arch-photo img,
+        .team-arch-photo .team-arch-initials {
+            transform: scale(1.06);
+        }
+        .team-arch-tag {
+            transform: translateY(-4px);
+        }
+    }
+}
+.team-arch-photo {
+    aspect-ratio: 240 / 290;
+    overflow: hidden;
+    background-color: $gray;
+
+    img,
+    .team-arch-initials {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+    }
+    // Portraits: crop from the bottom so heads keep their headroom
+    img {
+        object-position: center top;
+    }
+    // Shown until a photo is added
+    .team-arch-initials {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(160deg, $brand-blue, $dark-div);
+        color: $warning;
+        font-family: $heading-font-family;
+        font-size: 64px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+    }
+}
+.team-arch-tag {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 0;
+    padding: 10px 14px;
+    background-color: $white;
+    border: 1px solid rgba(1, 63, 85, 0.08);
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(1, 63, 85, 0.08);
+    transition: transform 0.4s ease;
+
+    h3 {
+        font-size: 16px;
+        margin-bottom: 2px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .team-arch-country {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 4px;
+        font-size: 12px;
+        font-weight: 600;
+        color: $body-color;
+
+        img {
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+    }
+    .team-arch-role {
+        display: block;
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: $body-color;
+    }
+}
+// Thick ribbon behind the second and third rows, as in the reference design
+.team-arch-ribbon {
+    position: absolute;
+    left: -8%;
+    top: 40%;
+    width: 116%;
+    height: 52%;
+    z-index: 0;
+    overflow: visible;
+    pointer-events: none;
+
+    path {
+        fill: none;
+        stroke: $dark-div;
+        stroke-width: 18px;
+        stroke-linecap: round;
+        vector-effect: non-scaling-stroke;
+    }
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+    .team-arch-card {
+        width: 205px;
+    }
+}
+
+/* Max width 991px: one wrapping list instead of fixed rows */
+@media only screen and (max-width: 991px) {
+    .team-arch-area .team-arch-intro {
+        margin-bottom: 50px;
+    }
+    .team-arch-grid {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 32px 24px;
+    }
+    .team-arch-row {
+        display: contents;
+    }
+    .team-arch-ribbon {
+        display: none;
+    }
+    .team-arch-card {
+        width: calc((100% - 48px) / 3);
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width: 767px) {
+    .team-arch-area .team-arch-intro {
+        margin-top: -10px;
+        font-size: 15px;
+    }
+    .team-arch-grid {
+        gap: 24px 16px;
+    }
+    .team-arch-card {
+        width: calc((100% - 16px) / 2);
+        padding-bottom: 24px;
+    }
+    .team-arch-tag {
+        left: 8px;
+        right: 8px;
+        padding: 8px 10px;
+
+        h3 {
+            font-size: 14px;
+        }
+        .team-arch-country {
+            font-size: 11px;
+        }
+        .team-arch-role {
+            font-size: 9px;
+            letter-spacing: 0.08em;
+        }
+    }
+}

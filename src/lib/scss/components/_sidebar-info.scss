@@ -1,0 +1,445 @@
+/* Sidebar Info Area Style
+============================================*/
+.sidebar-info {
+    &.offcanvas.offcanvas-end {
+        width: 535px;
+    }
+    .btn-close {
+        width: 52px;
+        height: 52px;
+        line-height: 54px;
+        text-align: center;
+        display: inline-block;
+        border: 1px solid $secondary;
+        border-radius: 100px;
+        background-image: unset;
+        font-size: 20px;
+        opacity: 1;
+        display: inline-block;
+        margin-left: auto;
+        padding: 0;
+        margin: 30px;
+        margin-bottom: 10px;
+        margin-left: auto;
+
+        &:focus {
+            box-shadow: none;
+        }
+        &:hover {
+            background-color: $primary;
+            border-color: $primary;
+            color: $secondary;
+        }
+    }
+    .offcanvas-body {
+        padding: 50px;
+        padding-top: 0;
+    }
+    .sidebar-single-item {
+        margin-bottom: 30px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+        .footer-logo {
+            margin-bottom: 30px;
+        }
+        p {
+            margin-top: 35px;
+            margin-bottom: 25px;
+        }
+        .newsletter-form {
+            margin: 30px 0;
+
+            .form-control {
+                height: 54px;
+                border-radius: 10px;
+            }
+            .submit-btn {
+                border-radius: 10px;
+                background: $primary;
+                border: none;
+                width: 46px;
+                height: 46px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0;
+                margin: 0 10px;
+            }
+            h3 {
+                color: $secondary;
+                font-size: 24px;
+                text-transform: capitalize;
+                margin-bottom: 30px;
+            }
+            .form-control {
+                height: 70px;
+            }
+        }
+        .form-check {
+            .form-check-label {
+
+                a {
+                    text-decoration: none;
+                    font-weight: 700;
+                    color: $secondary;
+                    
+                    &:hover {
+                        color: $primary;
+                    }
+                }
+            }
+        }
+        .footer-info {
+            li {
+                margin-bottom: 20px;
+                
+                &:last-child {
+                    margin-bottom: 0;
+                }
+                h4 {
+                    font-size: 18px;
+                    margin-bottom: 4px;
+                }
+                a {
+                    text-decoration: none;
+
+                    &:hover {
+                        color: $primary;
+                    }
+                }
+                img {
+                    position: relative;
+                    top: 2px;
+                }
+            }
+        }
+        .social-link {
+            gap: 10px;
+            margin-top: 30px;
+
+            li {
+                span {
+                    color: $secondary;
+                }
+                a {
+                    width: 38px;
+                    height: 38px;
+                    line-height: 38px;
+                    display: inline-block;
+                    text-align: center;
+                    border-radius: 50px;
+                    border: 1px solid rgba(255, 255, 255, 0.5);
+                    font-size: 16px;
+                    color: $secondary;
+                    text-decoration: none;
+                    background-color: $white;
+
+                    &:hover {
+                        color: $secondary;
+                        border-color: $primary;
+                        background-color: $primary;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width: 767px) {
+    .sidebar-info {
+        .btn-close {
+            margin: 20px;
+            margin-left: auto;
+            margin-bottom: 0;
+        }
+        .offcanvas-body {
+            padding: 20px;
+            padding-top: 0;
+        }
+        .sidebar-single-item .newsletter-form {
+            h3 {
+                font-size: 20px;
+                margin-bottom: 10px;
+            }
+        }
+    }
+    
+}
+
+/* RTL Area Style
+============================================*/
+.rtl {
+   
+    .sidebar-single-item {
+        h3 {
+            &::after {
+                left: auto;
+                right: 0;
+            }
+            &::before {
+                left: auto;
+                right: 0;
+            }
+        }
+    }
+    
+}
+
+/* Dark Mode Area Style
+============================================ */
+[for-dark-light-data-mode=for-dark] {
+    .sidebar-info {
+        .white-logo {
+            display: block !important;
+        }
+        .logo {
+            display: none;
+        }
+        p {
+            color: $dark-paragraph-color;
+        }
+        .form-check {
+            color: $dark-paragraph-color;
+            .form-check-label {
+                a {
+                    color: $white;
+                }
+            }
+        }
+        .footer-info {
+            li {
+                span {
+                    color: $dark-paragraph-color;
+                }
+                a {
+                    color: $dark-paragraph-color;
+                }
+            }
+        }
+        .social-link {
+            li {
+                span {
+                    color: $white;
+                }
+                a {
+                    background-color: $dark-card-bg;
+                    color: $white;
+                    border-color: $dark-border-color;
+                }
+            }
+        }
+        .btn-close {
+            border-color: $white;
+            i {
+                color: $white;
+            }
+            &:hover {
+                border-color: $primary;
+            }
+        }
+    }
+    
+}
+/* Contact Form Sidebar
+============================================*/
+.sidebar-info {
+    .sidebar-contact-title {
+        font-size: 30px;
+        margin: 30px 0 10px;
+    }
+    .sidebar-single-item .sidebar-contact-intro {
+        margin: 0 0 25px;
+    }
+}
+.contact-form {
+    .form-label {
+        font-size: 14px;
+        font-weight: 600;
+        color: $secondary;
+        margin-bottom: 6px;
+    }
+    .form-control,
+    .form-select {
+        background-color: $white;
+        border: 1px solid rgba(1, 63, 85, 0.12);
+        border-radius: 10px;
+        padding: 12px 15px;
+        font-size: 15px;
+
+        &:focus {
+            border-color: $brand-blue;
+            box-shadow: 0 0 0 3px rgba($brand-blue, 0.15);
+        }
+    }
+    textarea.form-control {
+        resize: vertical;
+        min-height: 110px;
+    }
+    .default-btn {
+        margin-top: 8px;
+    }
+    .form-control.is-invalid,
+    .form-select.is-invalid {
+        border-color: $danger;
+
+        &:focus {
+            box-shadow: 0 0 0 3px rgba($danger, 0.15);
+        }
+    }
+    .invalid-feedback {
+        font-size: 13px;
+        margin-top: 6px;
+    }
+}
+
+/* Max width 575px */
+@media only screen and (max-width: 575px) {
+    .sidebar-info {
+        .sidebar-contact-title {
+            font-size: 24px;
+        }
+    }
+}
+
+/* Phone Input
+============================================*/
+.phone-input {
+    position: relative;
+
+    .phone-input-control {
+        display: flex;
+        background-color: $white;
+        border: 1px solid rgba(1, 63, 85, 0.12);
+        border-radius: 10px;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+        &:focus-within {
+            border-color: $brand-blue;
+            box-shadow: 0 0 0 3px rgba($brand-blue, 0.15);
+        }
+    }
+    &.is-invalid .phone-input-control {
+        border-color: $danger;
+
+        &:focus-within {
+            box-shadow: 0 0 0 3px rgba($danger, 0.15);
+        }
+    }
+    .phone-country-btn {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 0 10px 0 14px;
+        background: transparent;
+        border: 0;
+        border-right: 1px solid rgba(1, 63, 85, 0.12);
+        border-radius: 10px 0 0 10px;
+        color: $secondary;
+
+        &:hover {
+            background-color: $gray;
+        }
+        i {
+            font-size: 16px;
+            opacity: 0.6;
+        }
+    }
+    .phone-number {
+        flex: 1;
+        min-width: 0;
+        border: 0;
+        outline: 0;
+        background: transparent;
+        padding: 12px 15px;
+        font-size: 15px;
+        color: $secondary;
+        border-radius: 0 10px 10px 0;
+    }
+    .phone-flag {
+        display: inline-flex;
+        flex-shrink: 0;
+        width: 24px;
+        height: 16px;
+        overflow: hidden;
+        border-radius: 3px;
+        background-color: rgba(18, 18, 18, 0.1);
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+    .phone-country-popover {
+        position: absolute;
+        top: calc(100% + 6px);
+        left: 0;
+        z-index: 20;
+        width: 100%;
+        max-width: 340px;
+        background-color: $white;
+        border: 1px solid rgba(1, 63, 85, 0.12);
+        border-radius: 12px;
+        box-shadow: $box-shadow;
+        overflow: hidden;
+    }
+    .phone-country-search {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0 14px;
+        border-bottom: 1px solid rgba(1, 63, 85, 0.1);
+
+        i {
+            opacity: 0.5;
+        }
+        input {
+            flex: 1;
+            border: 0;
+            outline: 0;
+            padding: 12px 0;
+            font-size: 14px;
+            background: transparent;
+        }
+    }
+    .phone-country-list {
+        max-height: 288px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        margin: 0;
+        padding: 6px;
+        list-style: none;
+
+        li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+
+            &.active {
+                background-color: $gray;
+            }
+        }
+        .phone-country-name {
+            flex: 1;
+            color: $secondary;
+        }
+        .phone-country-dial {
+            color: rgba(18, 18, 18, 0.5);
+        }
+        .ti-check {
+            color: $brand-blue;
+        }
+        .phone-country-empty {
+            justify-content: center;
+            color: $body-color;
+            cursor: default;
+        }
+    }
+}

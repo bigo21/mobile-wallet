@@ -1,0 +1,236 @@
+/* Presentation Document CTA & Modal
+============================================*/
+.presentation-cta {
+    margin-top: 60px;
+}
+.presentation-modal {
+    .modal-dialog {
+        max-width: 600px;
+    }
+    .modal-content {
+        border: 0;
+        border-radius: 20px;
+        padding: 40px 56px 36px;
+    }
+    .presentation-close {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        background-color: $gray;
+        border: 0;
+        border-radius: 50%;
+        font-size: 20px;
+        color: $secondary;
+        transition: $transition;
+
+        &:hover {
+            background-color: $warning;
+        }
+    }
+    .presentation-logo {
+        display: block;
+        height: 72px;
+        width: auto;
+        max-width: 100%;
+        margin: 16px auto 40px;
+    }
+    .presentation-title {
+        text-align: center;
+        font-size: 30px;
+        margin-bottom: 10px;
+    }
+    .presentation-text {
+        text-align: center;
+        margin-bottom: 32px;
+    }
+    .presentation-field {
+        margin-bottom: 22px;
+        border: 0;
+        padding: 0;
+
+        > label,
+        legend {
+            display: block;
+            float: none;
+            width: auto;
+            margin-bottom: 10px;
+            padding: 0;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: $secondary;
+        }
+        .form-control {
+            height: 56px;
+            padding: 0 18px;
+            font-size: 16px;
+            border: 1px solid rgba(18, 18, 18, 0.15);
+            border-radius: 10px;
+
+            &::placeholder {
+                color: rgba(18, 18, 18, 0.4);
+            }
+            &:focus {
+                border-color: $warning;
+                box-shadow: 0 0 0 1px $warning;
+            }
+            &.is-invalid {
+                border-color: $danger;
+
+                &:focus {
+                    box-shadow: 0 0 0 1px $danger;
+                }
+            }
+        }
+        .invalid-feedback {
+            font-size: 13px;
+            margin-top: 6px;
+        }
+    }
+    .presentation-languages {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+    .presentation-language {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 52px;
+        border: 1px solid rgba(18, 18, 18, 0.15);
+        border-radius: 10px;
+        font-weight: 700;
+        color: $secondary;
+        cursor: pointer;
+        transition: background-color 0.2s ease, border-color 0.2s ease;
+
+        // The radio stays focusable for keyboards but is visually hidden
+        input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+        &:hover {
+            border-color: $warning;
+        }
+        &.active {
+            background-color: $warning;
+            border-color: $warning;
+        }
+        &:has(input:focus-visible) {
+            outline: 2px solid $dark-div;
+            outline-offset: 2px;
+        }
+    }
+    .presentation-submit {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        margin-top: 8px;
+        padding: 18px;
+        border: 0;
+        border-radius: 10px;
+        background-color: $warning;
+        color: $secondary;
+        font-size: 18px;
+        font-weight: 700;
+        transition: $transition;
+
+        &:hover {
+            background-color: $primary;
+        }
+    }
+}
+
+/* Max width 575px */
+@media only screen and (max-width: 575px) {
+    .presentation-cta {
+        margin-top: 40px;
+
+        .default-btn {
+            white-space: normal;
+        }
+    }
+    .presentation-modal {
+        .modal-content {
+            padding: 28px 22px 26px;
+        }
+        .presentation-logo {
+            height: 56px;
+            margin: 16px auto 28px;
+        }
+        .presentation-title {
+            font-size: 24px;
+        }
+    }
+}
+
+/* Form States (contact sidebar & presentation modal)
+============================================*/
+// Off-screen rather than display:none, which some bots skip
+.form-honeypot {
+    position: absolute !important;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+.form-alert {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background-color: rgba($danger, 0.07);
+    border: 1px solid rgba($danger, 0.25);
+    color: #A61B1B;
+    font-size: 14px;
+    line-height: 1.45;
+
+    i {
+        font-size: 18px;
+        line-height: 1.2;
+    }
+}
+.form-success {
+    text-align: center;
+    padding: 10px 0 4px;
+
+    .form-success-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 64px;
+        height: 64px;
+        margin-bottom: 18px;
+        border-radius: 50%;
+        background-color: $warning;
+        color: $secondary;
+        font-size: 32px;
+    }
+    h4 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+    p {
+        margin: 0 auto 24px !important;
+        max-width: 420px;
+    }
+    .default-btn {
+        display: inline-block;
+    }
+}
+.contact-form .default-btn:disabled,
+.presentation-modal .presentation-submit:disabled {
+    opacity: 0.7;
+    cursor: wait;
+}

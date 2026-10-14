@@ -1,0 +1,86 @@
+/* Responsive fixes for the home page
+============================================ */
+
+// The 150px column gaps on wide screens push the row past the viewport edge
+.getting-started-area-three {
+    overflow-x: clip;
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+    // Keep location and email on one line in the top bar
+    .header-info {
+        gap: 30px;
+
+        li {
+            font-size: 14px;
+            white-space: nowrap;
+
+            &::before {
+                right: -16px;
+            }
+        }
+    }
+    // Give the nav links room to breathe between the logo and the buttons
+    .navbar {
+        .brand-logo {
+            height: 42px;
+        }
+        .navbar-brand.me-100 {
+            margin-right: 20px;
+        }
+        .navbar-nav .nav-item {
+            margin-left: 9px;
+            margin-right: 9px;
+        }
+    }
+}
+
+/* Max width 991px */
+@media only screen and (max-width: 991px) {
+    .header-info {
+        gap: 5px 20px;
+
+        li::before {
+            display: none;
+        }
+    }
+
+    // Badge sits under the photo instead of covering it
+    .about-us-img-three {
+        .experience {
+            position: relative;
+            max-width: none;
+            margin: 16px 0 0;
+            padding: 20px 25px;
+        }
+    }
+
+    .faq-img-three {
+        > img {
+            max-width: 480px;
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width: 767px) {
+    // The two reason lists stack: keep the divider between them
+    .choose-us-area {
+        .col-md-6:first-child {
+            .choose-us-single-item-three:last-child {
+                padding-bottom: 35px;
+                margin-bottom: 11px;
+                border-bottom: 2px dashed rgba(1, 63, 85, 0.18);
+            }
+        }
+    }
+}
+
+/* Min width 992px */
+@media only screen and (min-width: 992px) {
+    // Keep the last social link clear of the fixed back-to-top button (40px, 30px from the edge)
+    .copy-right-area .policy {
+        margin-right: 55px;
+    }
+}
