@@ -7,6 +7,7 @@
 
 	import { onMount } from 'svelte';
 	import { afterNavigate } from '$app/navigation';
+	import { page } from '$app/state';
 	import FloatingControls from '#lib/components/layout/FloatingControls.svelte';
 	import Footer from '#lib/components/layout/Footer.svelte';
 	import Header from '#lib/components/layout/Header.svelte';
@@ -16,6 +17,9 @@
 	import { m } from '#lib/paraglide/messages.js';
 
 	let { children } = $props();
+
+	// The admin pages have their own layout, without the site's header, footer and overlays
+	const admin = $derived(page.route.id?.startsWith('/admin') ?? false);
 
 	let scrollCue: typeof import('#lib/vendor/scrollCue.js').default | undefined;
 
@@ -53,18 +57,24 @@
 </script>
 
 <svelte:head>
-	<title>{m.meta_title()}</title>
+	{#if !admin}
+		<title>{m.meta_title()}</title>
+	{/if}
 </svelte:head>
 
-<Header />
-<MobileNav />
-<SidebarInfo />
-<PresentationModal />
+{#if admin}
+	{@render children()}
+{:else}
+	<Header />
+	<MobileNav />
+	<SidebarInfo />
+	<PresentationModal />
 
-{@render children()}
+	{@render children()}
 
-<Footer />
-<FloatingControls />
+	<Footer />
+	<FloatingControls />
+{/if}
 
 <style>
 	/* Keep anchored sections clear of the fixed header */

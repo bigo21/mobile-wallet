@@ -2,6 +2,7 @@ import { json } from '@sveltejs/kit';
 import * as v from 'valibot';
 import { presentationSchema, requestExtras } from '#lib/forms.ts';
 import { m } from '#lib/paraglide/messages.js';
+import { saveLead } from '#lib/server/db.ts';
 import { emailContext, fromAddress, resend, sentAt, supportAddress } from '#lib/server/email.ts';
 import { leadNotification, presentationEmail } from '#lib/server/email-templates.ts';
 import { rateLimited } from '#lib/server/rate-limit.ts';
@@ -22,6 +23,18 @@ export const POST: RequestHandler = async ({ request, getClientAddress }) => {
 	if (!result.success) return json({ ok: false, error: 'invalid' }, { status: 400 });
 
 	const { name, email, language } = result.output;
+
+	// Saved before sending, so the lead is kept even if the email fails
+	await saveLead({
+		type: 'presentation',
+		name,
+		email,
+		lang: extras.output.locale ?? 'en',
+		docLang: language,
+		ip: getClientAddress(),
+		userAgent: request.headers.get('user-agent')
+	});
+
 	const locale = { locale: language };
 	const document = documents[language];
 	const pdf = pdfBuffer(language);

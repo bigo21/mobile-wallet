@@ -2,6 +2,7 @@ import { json } from '@sveltejs/kit';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import * as v from 'valibot';
 import { contactSchema, interestLabel, requestExtras } from '#lib/forms.ts';
+import { saveLead } from '#lib/server/db.ts';
 import { emailContext, fromAddress, resend, sentAt, supportAddress } from '#lib/server/email.ts';
 import { contactNotification } from '#lib/server/email-templates.ts';
 import { rateLimited } from '#lib/server/rate-limit.ts';
@@ -20,13 +21,29 @@ export const POST: RequestHandler = async ({ request, getClientAddress }) => {
 	const result = v.safeParse(contactSchema(), body);
 	if (!result.success) return json({ ok: false, error: 'invalid' }, { status: 400 });
 
-	const { name, email, company, phone, interest, message } = result.output;
+	const { name, email, company, interest, message } = result.output;
+	const phone = result.output.phone ? (parsePhoneNumberFromString(result.output.phone)?.formatInternational() ?? result.output.phone) : undefined;
+
+	// Saved before sending, so the lead is kept even if the email fails
+	await saveLead({
+		type: 'contact',
+		name,
+		email,
+		company,
+		phone,
+		interest,
+		message,
+		lang: extras.output.locale ?? 'en',
+		ip: getClientAddress(),
+		userAgent: request.headers.get('user-agent')
+	});
+
 	const mail = contactNotification({
 		...emailContext('Sent automatically from the contact form on mobilewalletinc.com.'),
 		name,
 		email,
 		company,
-		phone: phone ? (parsePhoneNumberFromString(phone)?.formatInternational() ?? phone) : undefined,
+		phone,
 		interest: interestLabel(interest, 'en'),
 		message,
 		siteLanguage: extras.output.locale === 'fr' ? 'French' : 'English',

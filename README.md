@@ -24,6 +24,8 @@ Vercel (Project → Settings → Environment Variables).
 | `RESEND_FROM` | no | `MobileWallet <support@mobilewalletinc.com>` | Sender — its domain must be verified in Resend |
 | `CONTACT_TO` | no | `support@mobilewalletinc.com` | Inbox for enquiries and presentation leads |
 | `SITE_URL` | no | `https://mobilewalletinc.com` | Used for links and the logo inside emails |
+| `DATABASE_URL` | no | — | Supabase Postgres (transaction pooler, port 6543) where leads are saved |
+| `ADMIN_PASSWORD` | no | — | Password of the `/admin` leads page (locked while unset) |
 
 They're declared (and validated) in `src/env.ts` and read from `$app/env/private`.
 
@@ -32,6 +34,10 @@ They're declared (and validated) in `src/env.ts` and read from `$app/env/private
 - **Contact form** (sidebar) → `POST /api/contact` → email to `CONTACT_TO`, with Reply-To set to the visitor.
 - **Presentation request** (modal) → `POST /api/presentation` → the PDF is emailed to the visitor in the language they picked, and a lead notification goes to `CONTACT_TO`.
 - `GET /api/download?l=fr|en` serves the PDF directly — it keeps the download links sent by the previous website working.
+
+Both forms also save the lead in Supabase (private `mobilewallet` schema, table `leads` —
+see `supabase/migrations/`) before sending the emails. Saving is best effort: if the
+database is down, the emails still go out.
 
 Both forms are validated in the browser and again on the server with the same
 [Valibot](https://valibot.dev) schemas (`src/lib/forms.ts`), and are protected by a
@@ -42,6 +48,12 @@ can be rendered on their own). The presentation PDFs are in `src/lib/server/docu
 and are bundled into the server code, not published as public files — replace
 `presentation-en.pdf` / `presentation-fr.pdf` (and update `pages` in
 `src/lib/server/documents.ts`) to change them.
+
+## Leads admin
+
+`/admin` (French only, not indexed) lists the leads with a filter per form and a CSV
+export. It asks for `ADMIN_PASSWORD`; the session cookie lasts 7 days. Access is
+checked in `src/hooks.server.ts` for every `/admin` route.
 
 ## Project layout
 
