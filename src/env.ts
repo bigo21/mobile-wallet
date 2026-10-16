@@ -25,6 +25,10 @@ export const variables = defineEnvVars({
 		// Optional: without it the forms still send their emails, leads just aren't saved
 		schema: v.optional(v.string())
 	},
+	ADMIN_NAME: {
+		description: 'Name to enter on the /admin login page — the page stays locked while it is unset',
+		schema: v.optional(v.string())
+	},
 	ADMIN_PASSWORD: {
 		description: 'Password of the /admin leads page — the page stays locked while it is unset',
 		schema: v.optional(v.string())
