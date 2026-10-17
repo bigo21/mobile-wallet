@@ -29,6 +29,19 @@ export const team = (): { name: string; role: string; country: CountryCode; imag
 	{ name: 'Toby Cutler', role: m.team_role_advisor(), country: 'US', image: 'team/toby.webp' }
 ];
 
+/** Chapters of the ATM demo video (static/assets/videos/demo-video.mp4), start times in seconds */
+export const demoChapters = () => [
+	{ start: 0, title: m.demo_ch_intro() },
+	{ start: 14, title: m.demo_ch_language() },
+	{ start: 30, title: m.demo_ch_operation() },
+	{ start: 36, title: m.demo_ch_identification() },
+	{ start: 56, title: m.demo_ch_details() },
+	{ start: 64, title: m.demo_ch_number() },
+	{ start: 74, title: m.demo_ch_cash() },
+	{ start: 80, title: m.demo_ch_confirm() },
+	{ start: 91, title: m.demo_ch_receipt() }
+];
+
 export const partners = [
 	{ name: 'UBA', image: 'partners/uba.png' },
 	{ name: 'NCR', image: 'partners/ncr.svg' },

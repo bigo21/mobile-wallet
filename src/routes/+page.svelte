@@ -6,6 +6,7 @@
 	import Blog from '#lib/components/home/Blog.svelte';
 	import ChooseUs from '#lib/components/home/ChooseUs.svelte';
 	import ContactCta from '#lib/components/home/ContactCta.svelte';
+	import VideoDemo from '#lib/components/home/VideoDemo.svelte';
 	import Covering from '#lib/components/home/Covering.svelte';
 	import Faq from '#lib/components/home/Faq.svelte';
 	import FunFacts from '#lib/components/home/FunFacts.svelte';
@@ -27,6 +28,7 @@
 <Partners />
 <Team />
 <ChooseUs />
+<VideoDemo />
 <GettingStarted />
 <Faq />
 <FunFacts />

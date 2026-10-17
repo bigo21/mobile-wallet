@@ -121,5 +121,6 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 @import "./components/contact-us";
 @import "./components/details-content";
 @import "./components/products";
+@import "./components/demo";
 @import "./components/presentation";
 @import "./components/responsive";

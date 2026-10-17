@@ -18,7 +18,15 @@
 					<p class="text-secondary">
 						{m.hero_text()}
 					</p>
-					<a href={link('/#plans')} class="default-btn">{m.hero_cta()}</a>
+					<div class="d-flex flex-wrap align-items-center hero-actions">
+						<a href={link('/#plans')} class="default-btn">{m.hero_cta()}</a>
+						<a href={link('/#demo')} class="hero-watch">
+							<span class="hero-watch-icon" aria-hidden="true">
+								<svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor"><path d="M7 4.6v14.8a1 1 0 0 0 1.5.86l12-7.4a1 1 0 0 0 0-1.72l-12-7.4A1 1 0 0 0 7 4.6Z" /></svg>
+							</span>
+							<span>{m.demo_watch()} <span class="hero-watch-time">1:50</span></span>
+						</a>
+					</div>
 
 					<div class="d-flex flex-wrap align-items-center clients gap-20">
 						<div class="d-flex">
