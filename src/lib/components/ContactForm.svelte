@@ -75,8 +75,8 @@
 	</div>
 {:else}
 	<form class="contact-form" novalidate onsubmit={submit}>
-		<!-- Honeypot: hidden from people, bots fill it in -->
-		<input type="text" name="website" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" bind:value={honeypot} />
+		<!-- Honeypot: hidden from people, bots fill it in. Neutral name + ignore attributes keep autofill and password managers out -->
+		<input type="text" name="mw_hp" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" data-1p-ignore data-lpignore="true" data-bwignore data-form-type="other" bind:value={honeypot} />
 		<div class="row g-3">
 			<div class="col-12">
 				<label class="form-label" for="contact-name">{m.contact_name()}</label>

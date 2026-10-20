@@ -14,8 +14,12 @@ export const POST: RequestHandler = async ({ request, getClientAddress }) => {
 	const extras = v.safeParse(requestExtras, body);
 	if (!extras.success) return json({ ok: false, error: 'invalid' }, { status: 400 });
 
-	// A filled honeypot means a bot: pretend it worked and send nothing
-	if (extras.output.website) return json({ ok: true });
+	// A filled honeypot is most likely a bot, but browser autofill can fill it too: never report
+	// success for a request that isn't sent, so a real visitor sees the error and can email us
+	if (extras.output.website) {
+		console.warn('[contact] honeypot filled, request rejected');
+		return json({ ok: false, error: 'rejected' }, { status: 400 });
+	}
 	if (rateLimited(`contact:${getClientAddress()}`)) return json({ ok: false, error: 'rate_limited' }, { status: 429 });
 
 	const result = v.safeParse(contactSchema(), body);

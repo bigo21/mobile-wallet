@@ -87,8 +87,8 @@
 				<p class="presentation-text">{m.presentation_text()}</p>
 
 				<form novalidate onsubmit={submit}>
-					<!-- Honeypot: hidden from people, bots fill it in -->
-					<input type="text" name="website" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" bind:value={honeypot} />
+					<!-- Honeypot: hidden from people, bots fill it in. Neutral name + ignore attributes keep autofill and password managers out -->
+					<input type="text" name="mw_hp" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" data-1p-ignore data-lpignore="true" data-bwignore data-form-type="other" bind:value={honeypot} />
 					<div class="presentation-field">
 						<label for="presentation-name">{m.presentation_name()}</label>
 						<input
