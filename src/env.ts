@@ -19,5 +19,18 @@ export const variables = defineEnvVars({
 	CONTACT_TO: {
 		description: 'Inbox that receives enquiries and presentation leads',
 		schema: v.optional(v.pipe(v.string(), v.email()), 'support@mobilewalletinc.com')
+	},
+	DATABASE_URL: {
+		description: 'Supabase Postgres (transaction pooler, port 6543) where leads are saved',
+		// Optional: without it the forms still send their emails, leads just aren't saved
+		schema: v.optional(v.string())
+	},
+	ADMIN_NAME: {
+		description: 'Name to enter on the /admin login page — the page stays locked while it is unset',
+		schema: v.optional(v.string())
+	},
+	ADMIN_PASSWORD: {
+		description: 'Password of the /admin leads page — the page stays locked while it is unset',
+		schema: v.optional(v.string())
 	}
 });
