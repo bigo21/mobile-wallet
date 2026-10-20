@@ -176,14 +176,6 @@
 
 /* Form States (contact sidebar & presentation modal)
 ============================================*/
-// Off-screen rather than display:none, which some bots skip
-.form-honeypot {
-    position: absolute !important;
-    left: -10000px;
-    width: 1px;
-    height: 1px;
-    opacity: 0;
-}
 .form-alert {
     display: flex;
     gap: 10px;

@@ -15,11 +15,6 @@ export const POST: RequestHandler = async ({ request, getClientAddress }) => {
 	const extras = v.safeParse(requestExtras, body);
 	if (!extras.success) return json({ ok: false, error: 'invalid' }, { status: 400 });
 
-	// Never report success for a request that isn't sent (see the contact route)
-	if (extras.output.website) {
-		console.warn('[presentation] honeypot filled, request rejected');
-		return json({ ok: false, error: 'rejected' }, { status: 400 });
-	}
 	// Stricter than the contact form: this one sends mail to the address it is given
 	if (rateLimited(`presentation:${getClientAddress()}`, { max: 3 })) return json({ ok: false, error: 'rate_limited' }, { status: 429 });
 

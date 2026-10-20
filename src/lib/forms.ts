@@ -53,9 +53,7 @@ export const presentationSchema = () =>
 
 /** What the API routes accept on top of the form fields */
 export const requestExtras = v.object({
-	locale: v.optional(v.picklist(locales)),
-	// Honeypot: hidden from people, so anything in it came from a bot
-	website: v.optional(v.string())
+	locale: v.optional(v.picklist(locales))
 });
 
 /** One message per field — the first rule it fails */

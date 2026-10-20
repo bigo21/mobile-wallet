@@ -41,8 +41,9 @@ see `supabase/migrations/`) before sending the emails. Saving is best effort: if
 database is down, the emails still go out.
 
 Both forms are validated in the browser and again on the server with the same
-[Valibot](https://valibot.dev) schemas (`src/lib/forms.ts`), and are protected by a
-honeypot field and a per-visitor rate limit.
+[Valibot](https://valibot.dev) schemas (`src/lib/forms.ts`), and are protected by a per-visitor rate limit. (There
+is no honeypot field: browser autofill filled it for real visitors, whose requests were
+then dropped.)
 
 Email templates live in `src/lib/server/email-templates.ts` (no dependencies, so they
 can be rendered on their own). The presentation PDFs are in `src/lib/server/documents/`

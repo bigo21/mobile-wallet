@@ -12,7 +12,6 @@
 	const empty = () => ({ name: '', email: '', language: getLocale() });
 
 	let values = $state(empty());
-	let honeypot = $state('');
 	let errors = $state<Partial<Record<Field, string>>>({});
 	let attempted = $state(false);
 	let status = $state<'idle' | 'sending' | 'sent' | 'error' | 'rate_limited'>('idle');
@@ -56,7 +55,7 @@
 			const response = await fetch('/api/presentation', {
 				method: 'POST',
 				headers: { 'content-type': 'application/json' },
-				body: JSON.stringify({ ...result.output, locale: getLocale(), website: honeypot })
+				body: JSON.stringify({ ...result.output, locale: getLocale() })
 			});
 			if (response.ok) sentTo = result.output.email;
 			status = response.ok ? 'sent' : response.status === 429 ? 'rate_limited' : 'error';
@@ -87,8 +86,6 @@
 				<p class="presentation-text">{m.presentation_text()}</p>
 
 				<form novalidate onsubmit={submit}>
-					<!-- Honeypot: hidden from people, bots fill it in. Neutral name + ignore attributes keep autofill and password managers out -->
-					<input type="text" name="mw_hp" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" data-1p-ignore data-lpignore="true" data-bwignore data-form-type="other" bind:value={honeypot} />
 					<div class="presentation-field">
 						<label for="presentation-name">{m.presentation_name()}</label>
 						<input

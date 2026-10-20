@@ -13,7 +13,6 @@
 	const empty = () => ({ name: '', email: '', company: '', phone: '', interest: interests[0] as Interest, message: '' });
 
 	let values = $state(empty());
-	let honeypot = $state('');
 	let errors = $state<Partial<Record<Field, string>>>({});
 	// Errors only show after the first submit attempt, then update as the visitor types
 	let attempted = $state(false);
@@ -44,7 +43,7 @@
 			const response = await fetch('/api/contact', {
 				method: 'POST',
 				headers: { 'content-type': 'application/json' },
-				body: JSON.stringify({ ...result.output, locale: getLocale(), website: honeypot })
+				body: JSON.stringify({ ...result.output, locale: getLocale() })
 			});
 			status = response.ok ? 'sent' : response.status === 429 ? 'rate_limited' : 'error';
 		} catch {
@@ -75,8 +74,6 @@
 	</div>
 {:else}
 	<form class="contact-form" novalidate onsubmit={submit}>
-		<!-- Honeypot: hidden from people, bots fill it in. Neutral name + ignore attributes keep autofill and password managers out -->
-		<input type="text" name="mw_hp" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" data-1p-ignore data-lpignore="true" data-bwignore data-form-type="other" bind:value={honeypot} />
 		<div class="row g-3">
 			<div class="col-12">
 				<label class="form-label" for="contact-name">{m.contact_name()}</label>
