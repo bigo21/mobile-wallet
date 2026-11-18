@@ -43,6 +43,7 @@ export const navigation = (): NavGroup[] => [
 	{ label: m.nav_market(), href: link('/#market') },
 	{ label: m.nav_solutions(), href: link('/#solutions') },
 	{ label: m.nav_plans(), href: link('/#plans') },
+	{ label: m.nav_tutorials(), href: link('/tutorials') },
 	{ label: m.nav_contact(), href: link('/#contact') }
 ];
 
@@ -59,6 +60,7 @@ export const footerColumns = () => [
 			{ label: m.nav_solutions(), href: link('/#solutions') },
 			{ label: m.nav_about(), href: link('/#about') },
 			{ label: m.nav_plans(), href: link('/#plans') },
+			{ label: m.nav_tutorials(), href: link('/tutorials') },
 			{ label: m.nav_faq(), href: link('/#faq') }
 		]
 	},

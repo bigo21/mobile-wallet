@@ -1,0 +1,1599 @@
+/* Video Tutorials page
+   Palette lifted from the tutorial videos: pale blue-grey stage, deep teal ink, ATM yellow.
+============================================*/
+$tuto-paper: #F0F4F6; // the videos' background
+$tuto-disc: #E1EBEF;  // the big circles behind each illustration
+$tuto-ink: $dark-div;
+$tuto-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+// Text that changes with the step slides up from under a mask
+.tuto-swap {
+    display: inline-block;
+    animation: tuto-swap 0.6s $tuto-ease both;
+}
+@keyframes tuto-swap {
+    from { opacity: 0; transform: translateY(40%); filter: blur(4px); }
+    to { opacity: 1; transform: none; filter: none; }
+}
+
+/* Hero
+--------------------------------------------*/
+.tuto-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 245px 0 120px;
+    background-color: $tuto-paper;
+
+    .top-title {
+        margin-bottom: 26px;
+    }
+    h1 {
+        max-width: 1100px;
+        margin: 0 0 28px;
+        color: $tuto-ink;
+        font-size: clamp(44px, 7.4vw, 124px);
+        line-height: 0.98;
+        letter-spacing: -0.035em;
+    }
+    // Keep the highlighted words together ("60 seconds")
+    .under-line {
+        white-space: nowrap;
+        padding-bottom: 0.08em;
+    }
+}
+.tuto-word {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    padding-bottom: 0.06em;
+
+    > span {
+        display: inline-block;
+        animation: tuto-rise 1.1s $tuto-ease both;
+        animation-delay: calc(var(--i) * 0.07s + 0.1s);
+    }
+}
+@keyframes tuto-rise {
+    from { transform: translateY(105%) rotate(4deg); }
+    to { transform: none; }
+}
+.tuto-lede {
+    max-width: 640px;
+    font-size: 19px;
+    color: #44606d;
+    animation: tuto-fade 1s ease 0.5s both;
+}
+@keyframes tuto-fade {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: none; }
+}
+.tuto-pick {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 70px 0 22px;
+    color: $tuto-ink;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+
+    &::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background-color: rgba(1, 63, 85, 0.18);
+    }
+    i {
+        font-size: 16px;
+        animation: tuto-nudge 1.8s ease-in-out infinite;
+    }
+}
+@keyframes tuto-nudge {
+    50% { transform: translateY(4px); }
+}
+
+// Decorative artwork echoing the videos
+.tuto-hero-deco {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    span {
+        position: absolute;
+        border-radius: 50%;
+    }
+    .deco-disc {
+        width: 760px;
+        height: 760px;
+        top: 70px;
+        right: -180px;
+        background-color: $tuto-disc;
+    }
+    .deco-ring {
+        border: 6px solid $warning;
+        animation: tuto-float 9s ease-in-out infinite;
+    }
+    .deco-ring-1 {
+        width: 120px;
+        height: 120px;
+        top: 230px;
+        right: 34%;
+    }
+    .deco-ring-2 {
+        width: 64px;
+        height: 64px;
+        top: 520px;
+        right: 6%;
+        border-width: 4px;
+        animation-delay: -4s;
+    }
+    .deco-dot {
+        background-color: #B7D3DF;
+        animation: tuto-float 7s ease-in-out infinite;
+    }
+    .deco-dot-1 { width: 26px; height: 26px; top: 190px; right: 14%; }
+    .deco-dot-2 { width: 14px; height: 14px; top: 640px; right: 40%; background-color: $warning; animation-delay: -2s; }
+    .deco-dot-3 { width: 18px; height: 18px; top: 420px; left: 3%; animation-delay: -5s; }
+}
+@keyframes tuto-float {
+    50% { transform: translate3d(0, -18px, 0); }
+}
+
+// Tutorial "tickets"
+.tuto-cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px;
+}
+.tuto-ticket {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+    border-radius: 28px;
+    background-color: $white;
+    box-shadow: 0 1px 0 rgba(1, 63, 85, 0.06), 0 30px 60px -36px rgba(1, 63, 85, 0.45);
+    overflow: hidden;
+    animation: tuto-fade 1s $tuto-ease both;
+    animation-delay: var(--d, 0.5s);
+    transition: transform 0.6s $tuto-ease, box-shadow 0.6s $tuto-ease;
+
+    &:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 1px 0 rgba(1, 63, 85, 0.06), 0 40px 70px -34px rgba(1, 63, 85, 0.55);
+    }
+}
+.tuto-ticket-visual {
+    position: relative;
+    min-height: 340px;
+    background-color: $tuto-disc;
+    cursor: ew-resize;
+    overflow: hidden;
+
+    > img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transform: scale(1.06);
+        transition: opacity 0.45s ease, transform 0.9s $tuto-ease;
+
+        &.shown {
+            opacity: 1;
+            transform: none;
+        }
+    }
+    // A soft vignette so the labels stay legible
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(1, 63, 85, 0.75), rgba(1, 63, 85, 0) 42%);
+        pointer-events: none;
+    }
+}
+.tuto-ticket-step {
+    position: absolute;
+    z-index: 1;
+    top: 18px;
+    left: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background-color: $warning;
+    color: $tuto-ink;
+    font-family: $heading-font-family;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1;
+    box-shadow: 0 8px 18px rgba(1, 63, 85, 0.25);
+
+    small {
+        font-size: 8px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+}
+.tuto-ticket-ticks {
+    position: absolute;
+    z-index: 1;
+    left: 18px;
+    right: 18px;
+    bottom: 16px;
+    display: flex;
+    gap: 4px;
+
+    span {
+        flex: 1;
+        height: 4px;
+        border-radius: 4px;
+        background-color: rgba(255, 255, 255, 0.35);
+        transition: background-color 0.3s ease;
+
+        &.on {
+            background-color: $warning;
+        }
+    }
+}
+.tuto-ticket-caption {
+    position: absolute;
+    z-index: 1;
+    left: 18px;
+    right: 18px;
+    bottom: 32px;
+    color: $white;
+    font-family: $heading-font-family;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.25;
+}
+.tuto-ticket-hint {
+    position: absolute;
+    z-index: 1;
+    top: 26px;
+    right: 18px;
+    padding: 4px 10px;
+    border-radius: 100px;
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(6px);
+    color: $tuto-ink;
+    font-size: 12px;
+    font-weight: 600;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+
+    @media (hover: hover) {
+        .tuto-ticket-visual:hover & {
+            opacity: 1;
+            transform: none;
+        }
+    }
+}
+.tuto-ticket-body {
+    display: flex;
+    flex-direction: column;
+    padding: 34px 34px 30px;
+
+    h2 {
+        margin: 18px 0 12px;
+        color: $tuto-ink;
+        font-size: clamp(26px, 2.3vw, 38px);
+        letter-spacing: -0.02em;
+    }
+    p {
+        color: #5b7480;
+    }
+}
+.tuto-ticket-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.tuto-ticket-index {
+    font-family: $heading-font-family;
+    font-size: 54px;
+    font-weight: 700;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(1, 63, 85, 0.35);
+}
+.tuto-ticket-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 100px;
+    background-color: rgba(251, 202, 6, 0.22);
+    color: $tuto-ink;
+    font-size: 14px;
+    font-weight: 700;
+
+    .is-withdrawal & {
+        background-color: rgba(250, 101, 3, 0.14);
+    }
+}
+.tuto-ticket-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 6px 0 26px;
+    padding: 0;
+    list-style: none;
+
+    li {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 10px;
+        border-radius: 8px;
+        background-color: $tuto-paper;
+        color: $tuto-ink;
+        font-size: 13px;
+        font-weight: 600;
+    }
+}
+.default-btn.tuto-ticket-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: auto;
+    align-self: flex-start;
+}
+.tuto-ticket-cta-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: $tuto-ink;
+    color: $warning;
+    font-size: 13px;
+
+    svg {
+        margin-left: 2px;
+    }
+}
+
+/* Studio (player)
+--------------------------------------------*/
+.tuto-studio-area {
+    position: relative;
+    padding: 110px 0 120px;
+    background:
+        radial-gradient(900px 500px at 85% 0%, rgba(2, 107, 144, 0.55), transparent 70%),
+        radial-gradient(700px 500px at 0% 100%, rgba(251, 202, 6, 0.08), transparent 70%),
+        $dark-div;
+    color: rgba(255, 255, 255, 0.78);
+
+    .top-title {
+        color: $white;
+        border-color: rgba(255, 255, 255, 0.25);
+        background: rgba(255, 255, 255, 0.08);
+    }
+}
+.tuto-studio-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+.tuto-studio-title {
+    margin: 16px 0 0;
+    color: $white;
+    font-size: clamp(32px, 3.6vw, 58px);
+    letter-spacing: -0.025em;
+    overflow: hidden;
+}
+.tuto-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px 24px;
+}
+.tuto-tool-label {
+    display: block;
+    margin-bottom: 8px;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+}
+
+// Segmented control with a sliding yellow pill
+.tuto-seg {
+    position: relative;
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-auto-flow: column;
+    padding: 4px;
+    border-radius: 14px;
+    background-color: rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 4px;
+        bottom: 4px;
+        left: 4px;
+        width: calc((100% - 8px) / var(--n));
+        border-radius: 10px;
+        background-color: $warning;
+        transform: translateX(calc(var(--i) * 100%));
+        transition: transform 0.5s $tuto-ease;
+    }
+    button {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        padding: 9px 16px;
+        border: 0;
+        border-radius: 10px;
+        background: none;
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 15px;
+        font-weight: 600;
+        white-space: nowrap;
+        transition: color 0.3s ease;
+
+        &[aria-pressed="true"] {
+            color: $tuto-ink;
+        }
+        &:focus-visible {
+            outline: 2px solid $white;
+            outline-offset: 2px;
+        }
+        img {
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    }
+}
+
+// Stage: player + now playing + steps rail
+.tuto-stage {
+    display: grid;
+    gap: 30px;
+
+    &.is-landscape {
+        grid-template-columns: minmax(0, 1fr) 380px;
+        grid-template-areas: "player rail" "now rail";
+    }
+    &.is-portrait {
+        grid-template-columns: minmax(0, 420px) minmax(0, 1fr) 380px;
+        grid-template-areas: "player now rail";
+    }
+}
+.tuto-player {
+    grid-area: player;
+    position: relative;
+    align-self: start;
+    width: 100%;
+    border-radius: 26px;
+    overflow: hidden;
+    background-color: #000;
+    box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.6);
+    outline: none;
+
+    .is-landscape & {
+        aspect-ratio: 16 / 9;
+    }
+    .is-portrait & {
+        aspect-ratio: 9 / 16;
+        max-height: 80vh;
+        justify-self: center;
+        border-radius: 34px;
+        // The phone bezel
+        box-shadow: 0 0 0 8px #0a2430, 0 0 0 9px rgba(255, 255, 255, 0.12), 0 40px 80px -30px rgba(0, 0, 0, 0.7);
+    }
+    &:focus-visible {
+        box-shadow: 0 0 0 4px $warning, 0 40px 80px -30px rgba(0, 0, 0, 0.6);
+    }
+    &:fullscreen {
+        border-radius: 0;
+        max-height: none;
+    }
+    video {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        background-color: $tuto-paper;
+        cursor: pointer;
+    }
+}
+
+.tuto-poster {
+    position: absolute;
+    inset: 0;
+    padding: 0;
+    border: 0;
+    background: $tuto-paper;
+    cursor: pointer;
+
+    > img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.9s $tuto-ease;
+    }
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(1, 63, 85, 0.82) 0%, rgba(1, 63, 85, 0.1) 40%, rgba(1, 63, 85, 0) 100%);
+    }
+    &:hover > img,
+    &:focus-visible > img {
+        transform: scale(1.035);
+    }
+    &:hover .tuto-play,
+    &:focus-visible .tuto-play {
+        transform: translate(-50%, -50%) scale(1.08);
+    }
+    &:focus-visible {
+        outline: 4px solid $warning;
+        outline-offset: -4px;
+    }
+}
+.tuto-poster-chips {
+    position: absolute;
+    z-index: 1;
+    top: 18px;
+    right: 18px;
+    display: flex;
+    gap: 6px;
+
+    > span {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 10px;
+        border-radius: 100px;
+        background-color: rgba(1, 63, 85, 0.85);
+        color: $white;
+        font-size: 12px;
+        font-weight: 700;
+    }
+    img {
+        border-radius: 50%;
+    }
+}
+.tuto-play {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 92px;
+    height: 92px;
+    border-radius: 50%;
+    background-color: $warning;
+    color: $tuto-ink;
+    font-size: 36px;
+    transform: translate(-50%, -50%);
+    transition: transform 0.4s $tuto-ease;
+    box-shadow: 0 14px 34px rgba(1, 63, 85, 0.4);
+
+    svg {
+        margin-left: 5px;
+    }
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        border: 2px solid rgba(251, 202, 6, 0.75);
+        animation: demo-pulse 2.4s ease-out infinite;
+    }
+    &::after {
+        animation-delay: 1.2s;
+    }
+}
+.tuto-poster-label {
+    position: absolute;
+    z-index: 1;
+    left: 26px;
+    bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: $white;
+
+    strong {
+        font-family: $heading-font-family;
+        font-size: 20px;
+    }
+    span {
+        padding: 3px 10px;
+        border-radius: 100px;
+        background-color: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(6px);
+        font-size: 14px;
+        font-variant-numeric: tabular-nums;
+    }
+}
+
+// Overlay controls
+.tuto-controls {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 50px 18px 12px;
+    background: linear-gradient(to top, rgba(1, 30, 41, 0.88), rgba(1, 30, 41, 0));
+    color: $white;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+
+    .tuto-player:not(.playing) &,
+    .tuto-player:hover &,
+    .tuto-player:focus-within & {
+        opacity: 1;
+        transform: none;
+    }
+    @media (hover: none) {
+        opacity: 1;
+        transform: none;
+    }
+}
+.tuto-timeline {
+    position: relative;
+    height: 22px;
+    display: flex;
+    align-items: center;
+
+    input[type="range"] {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        margin: 0;
+        opacity: 0;
+        cursor: pointer;
+    }
+    &:has(input:focus-visible) .tuto-segments {
+        outline: 2px solid $warning;
+        outline-offset: 4px;
+    }
+}
+// Story-style timeline: one segment per step
+.tuto-segments {
+    display: flex;
+    gap: 3px;
+    width: 100%;
+    border-radius: 4px;
+}
+.tuto-segment {
+    position: relative;
+    flex-basis: 0;
+    height: 5px;
+    border-radius: 3px;
+    background-color: rgba(255, 255, 255, 0.25);
+    overflow: hidden;
+    transition: height 0.2s ease;
+
+    &:not(.is-step) {
+        background-color: rgba(255, 255, 255, 0.14);
+    }
+    > span {
+        position: absolute;
+        inset: 0;
+        background-color: $warning;
+        transform-origin: left;
+    }
+    .tuto-timeline:hover & {
+        height: 8px;
+    }
+}
+// Hover preview: thumbnail + step name
+.tuto-scrub {
+    position: absolute;
+    bottom: 26px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    width: 170px;
+    margin-left: -85px;
+    pointer-events: none;
+    text-align: center;
+
+    img {
+        width: 96px;
+        height: 96px;
+        border-radius: 12px;
+        border: 2px solid $white;
+        object-fit: cover;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    }
+    .tuto-scrub-label {
+        padding: 4px 8px;
+        border-radius: 8px;
+        background-color: rgba(1, 30, 41, 0.9);
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 1.3;
+    }
+    .tuto-scrub-time {
+        padding: 1px 8px;
+        border-radius: 100px;
+        background-color: $warning;
+        color: $tuto-ink;
+        font-size: 12px;
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+    }
+}
+.tuto-bar {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 6px;
+
+    button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 40px;
+        height: 40px;
+        padding: 0 8px;
+        border: 0;
+        border-radius: 10px;
+        background: none;
+        color: $white;
+        font-size: 20px;
+        transition: background-color 0.2s ease;
+
+        &:hover,
+        &:focus-visible {
+            background-color: rgba(255, 255, 255, 0.14);
+        }
+    }
+    .tuto-rate {
+        font-size: 14px;
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+    }
+}
+.tuto-time {
+    margin-left: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+
+    span {
+        opacity: 0.6;
+    }
+}
+
+// End screen
+.tuto-end {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding: 24px;
+    background-color: rgba(1, 63, 85, 0.92);
+    backdrop-filter: blur(6px);
+    text-align: center;
+    animation: tuto-fade 0.6s $tuto-ease both;
+}
+.tuto-end-check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: $warning;
+    color: $tuto-ink;
+    font-size: 32px;
+}
+.tuto-end-title {
+    margin: 0;
+    color: $white;
+    font-family: $heading-font-family;
+    font-size: clamp(22px, 2.4vw, 34px);
+    font-weight: 700;
+}
+.tuto-end-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+}
+.tuto-end-replay {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border: 0;
+    border-radius: 10px;
+    background: none;
+    color: $white;
+    font-weight: 600;
+
+    &:hover,
+    &:focus-visible {
+        background-color: rgba(255, 255, 255, 0.12);
+    }
+}
+
+// Now playing — the current step, set large
+.tuto-now {
+    grid-area: now;
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+    min-width: 0;
+
+    .is-portrait & {
+        flex-direction: column;
+        justify-content: center;
+        gap: 10px;
+        padding: 10px 10px 10px 30px;
+    }
+}
+.tuto-now-num {
+    flex-shrink: 0;
+    overflow: hidden;
+    font-family: $heading-font-family;
+    font-weight: 700;
+    line-height: 0.85;
+    font-size: 120px;
+    color: $warning;
+    letter-spacing: -0.04em;
+
+    .is-portrait & {
+        font-size: clamp(120px, 14vw, 240px);
+    }
+    i {
+        font-size: 0.7em;
+    }
+}
+.tuto-now-body {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+
+    h3 {
+        margin: 6px 0 10px;
+        color: $white;
+        font-size: clamp(24px, 2.2vw, 38px);
+        line-height: 1.12;
+        letter-spacing: -0.015em;
+
+        .is-portrait & {
+            font-size: clamp(28px, 3vw, 52px);
+        }
+    }
+    p {
+        max-width: 560px;
+        color: rgba(255, 255, 255, 0.72);
+        font-size: 17px;
+    }
+}
+.tuto-now-kicker {
+    color: $warning;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+.tuto-now-nav {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 22px;
+
+    > button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        width: 46px;
+        height: 46px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        background: none;
+        color: $white;
+        font-size: 18px;
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+
+        &:hover:not(:disabled),
+        &:focus-visible {
+            background-color: $warning;
+            border-color: $warning;
+            color: $tuto-ink;
+        }
+        &:disabled {
+            opacity: 0.35;
+        }
+    }
+}
+.tuto-dots {
+    display: flex;
+    flex: 1;
+    gap: 5px;
+    max-width: 360px;
+
+    > span {
+        position: relative;
+        flex: 1;
+        height: 4px;
+        border-radius: 4px;
+        background-color: rgba(255, 255, 255, 0.18);
+        overflow: hidden;
+
+        &.done {
+            background-color: $warning;
+        }
+        > span {
+            position: absolute;
+            inset: 0;
+            background-color: $warning;
+            transform-origin: left;
+        }
+    }
+}
+
+// Steps rail
+.tuto-rail {
+    grid-area: rail;
+    display: flex;
+    flex-direction: column;
+    // Take exactly the height of the player beside it (never stretch the row), and scroll inside
+    height: 0;
+    min-height: 100%;
+    padding: 18px 10px 10px 18px;
+    border-radius: 24px;
+    background-color: rgba(255, 255, 255, 0.05);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+
+    ol {
+        position: relative;
+        flex: 1;
+        min-height: 0;
+        // Soft fade at the edges hints that the list scrolls
+        mask-image: linear-gradient(to bottom, transparent, #000 14px, #000 calc(100% - 28px), transparent);
+        margin: 0;
+        padding: 0 8px 0 0;
+        list-style: none;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+    }
+    li + li {
+        margin-top: 4px;
+    }
+    button {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        width: 100%;
+        padding: 8px;
+        border: 0;
+        border-radius: 14px;
+        background: none;
+        color: rgba(255, 255, 255, 0.82);
+        text-align: left;
+        overflow: hidden;
+        transition: background-color 0.3s ease;
+
+        &:hover,
+        &:focus-visible {
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+        &.active {
+            background-color: rgba(251, 202, 6, 0.14);
+            color: $white;
+
+            .tuto-rail-n {
+                background-color: $warning;
+                color: $tuto-ink;
+            }
+            .tuto-rail-thumb img {
+                transform: scale(1.08);
+            }
+        }
+        &.done .tuto-rail-n {
+            background-color: rgba(251, 202, 6, 0.9);
+            color: $tuto-ink;
+        }
+    }
+}
+.tuto-rail-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 8px 12px 0;
+    color: $white;
+    font-family: $heading-font-family;
+    font-size: 18px;
+    font-weight: 700;
+}
+.tuto-rail-count {
+    color: rgba(255, 255, 255, 0.55);
+    font-family: $body-font-family;
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+}
+.tuto-rail-thumb {
+    position: relative;
+    flex-shrink: 0;
+    width: 54px;
+    height: 54px;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: $tuto-disc;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s $tuto-ease;
+    }
+}
+.tuto-rail-n {
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 4px;
+    border-radius: 6px;
+    background-color: rgba(1, 63, 85, 0.85);
+    color: $white;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 20px;
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.tuto-rail-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+.tuto-rail-step {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.3;
+}
+.tuto-rail-time {
+    margin-top: 2px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+}
+.tuto-rail-progress {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: 0;
+    height: 2px;
+
+    span {
+        position: absolute;
+        inset: 0;
+        background-color: $warning;
+        transform-origin: left;
+    }
+}
+
+/* Step strip (pinned horizontal scroll on wide screens)
+--------------------------------------------*/
+.tuto-strip-area {
+    overflow: hidden;
+    background-color: $tuto-paper;
+
+    .under-line {
+        white-space: nowrap;
+    }
+}
+.tuto-strip-intro {
+    max-width: 600px;
+    margin: -20px auto 60px;
+    font-size: 17px;
+}
+.tuto-strip {
+    position: relative;
+}
+.tuto-strip-track {
+    display: flex;
+    align-items: stretch;
+    gap: 26px;
+    width: max-content;
+    padding: 10px max(16px, calc((100vw - 1690px) / 2 + 12px)) 30px;
+    will-change: transform;
+}
+.tuto-strip-lead {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: clamp(240px, 22vw, 340px);
+    padding: 30px;
+    border-radius: 26px;
+    background-color: $dark-div;
+    color: $white;
+
+    .tuto-strip-lead-label {
+        color: $warning;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+    }
+    .tuto-strip-lead-title {
+        margin: 10px 0 24px;
+        font-family: $heading-font-family;
+        font-size: clamp(30px, 2.8vw, 46px);
+        font-weight: 700;
+        line-height: 1.05;
+    }
+    i {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        background-color: $warning;
+        color: $dark-div;
+        font-size: 24px;
+    }
+}
+.tuto-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: clamp(270px, min(23vw, 44vh), 380px);
+    padding: 16px 16px 22px;
+    border-radius: 26px;
+    background-color: $white;
+    box-shadow: 0 24px 50px -36px rgba(1, 63, 85, 0.5);
+    transition: box-shadow 0.4s ease, transform 0.4s $tuto-ease;
+
+    &:hover {
+        transform: translateY(-6px);
+    }
+    &.active {
+        box-shadow: 0 0 0 3px $warning, 0 24px 50px -30px rgba(1, 63, 85, 0.55);
+    }
+    h3 {
+        margin: 6px 4px 6px;
+        color: $tuto-ink;
+        font-size: 21px;
+        line-height: 1.2;
+    }
+    p {
+        margin: 0 4px 16px;
+        color: #5b7480;
+        font-size: 15px;
+    }
+}
+.tuto-card-num {
+    position: absolute;
+    z-index: 1;
+    top: 4px;
+    right: 18px;
+    font-family: $heading-font-family;
+    font-size: 84px;
+    font-weight: 700;
+    line-height: 1;
+    color: $white;
+    -webkit-text-stroke: 2px $tuto-ink;
+    pointer-events: none;
+
+    .done & {
+        color: $warning;
+    }
+}
+.tuto-card-img {
+    position: relative;
+    aspect-ratio: 1;
+    margin-bottom: 16px;
+    border-radius: 18px;
+    overflow: hidden;
+    background-color: $tuto-disc;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+.tuto-card-live {
+    position: absolute;
+    left: 12px;
+    bottom: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 100px;
+    background-color: $dark-div;
+    color: $white;
+    font-size: 12px;
+    font-weight: 700;
+
+    span {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: $warning;
+        animation: tuto-blink 1s ease-in-out infinite alternate;
+    }
+}
+@keyframes tuto-blink {
+    to { opacity: 0.3; }
+}
+.tuto-card-kicker {
+    margin: 0 4px;
+    color: $primary;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+.tuto-card-play {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: auto 4px 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: $tuto-ink;
+    font-weight: 700;
+    align-self: flex-start;
+
+    > span[aria-hidden] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: $warning;
+        font-size: 13px;
+        transition: transform 0.4s $tuto-ease;
+
+        svg {
+            margin-left: 2px;
+        }
+    }
+    &:hover > span[aria-hidden],
+    &:focus-visible > span[aria-hidden] {
+        transform: scale(1.15);
+    }
+}
+.tuto-strip-progress {
+    position: relative;
+    height: 3px;
+    margin: 10px auto 0;
+    width: min(600px, 60%);
+    border-radius: 3px;
+    background-color: rgba(1, 63, 85, 0.12);
+    overflow: hidden;
+
+    span {
+        position: absolute;
+        inset: 0;
+        background-color: $dark-div;
+        transform: scaleX(0);
+        transform-origin: left;
+    }
+}
+
+/* Help
+--------------------------------------------*/
+.tuto-help-area {
+    background-color: $tuto-paper;
+}
+.tuto-help {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    gap: 30px;
+    align-items: stretch;
+}
+.tuto-help-main {
+    padding: 60px;
+    border-radius: 28px;
+    background-color: $white;
+
+    .main-title {
+        margin: 18px 0 16px;
+    }
+    p {
+        max-width: 620px;
+        font-size: 17px;
+    }
+}
+.tuto-help-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 30px;
+}
+.tuto-help-tip {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 30px;
+    padding: 40px;
+    border-radius: 28px;
+    background-color: $warning;
+    color: $tuto-ink;
+
+    p {
+        margin: 0;
+        font-family: $heading-font-family;
+        font-size: clamp(22px, 2vw, 32px);
+        font-weight: 700;
+        line-height: 1.2;
+    }
+}
+.tuto-help-tip-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: $tuto-ink;
+    color: $warning;
+    font-size: 30px;
+}
+
+/* Responsive
+--------------------------------------------*/
+@media only screen and (max-width: 1399px) {
+    .tuto-ticket {
+        grid-template-columns: 1fr;
+    }
+    .tuto-ticket-visual {
+        aspect-ratio: 16 / 10;
+    }
+}
+@media only screen and (max-width: 1199px) {
+    .tuto-stage {
+        &.is-landscape {
+            grid-template-columns: minmax(0, 1fr);
+            grid-template-areas: "player" "now" "rail";
+        }
+        &.is-portrait {
+            grid-template-columns: minmax(0, 380px) minmax(0, 1fr);
+            grid-template-areas: "player now" "rail rail";
+        }
+    }
+    .tuto-rail {
+        height: auto;
+        min-height: 0;
+    }
+    .tuto-rail ol {
+        mask-image: none;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 4px 12px;
+
+        li + li {
+            margin-top: 0;
+        }
+    }
+}
+@media only screen and (max-width: 991px) {
+    .tuto-hero {
+        padding: 200px 0 90px;
+    }
+    .tuto-cards {
+        grid-template-columns: 1fr;
+    }
+    .tuto-ticket {
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+    }
+    .tuto-ticket-visual {
+        aspect-ratio: auto;
+    }
+    .tuto-studio-area {
+        padding: 90px 0;
+    }
+    // Swipeable row instead of the pinned scroll
+    .tuto-strip-track {
+        width: auto;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        padding-left: 16px;
+        padding-right: 16px;
+        scroll-padding: 0 16px;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        > * {
+            flex-shrink: 0;
+            scroll-snap-align: start;
+        }
+    }
+    .tuto-strip-progress {
+        display: none;
+    }
+    .tuto-help {
+        grid-template-columns: 1fr;
+    }
+    .tuto-help-main {
+        padding: 40px;
+    }
+}
+@media only screen and (max-width: 767px) {
+    .tuto-hero {
+        padding: 50px 0 70px;
+
+        .under-line {
+            white-space: normal;
+        }
+    }
+    .tuto-hero-deco .deco-ring-1,
+    .tuto-hero-deco .deco-dot-1,
+    .tuto-hero-deco .deco-dot-3 {
+        display: none;
+    }
+    .tuto-hero-deco .deco-disc {
+        width: 420px;
+        height: 420px;
+        top: 260px;
+        right: -220px;
+    }
+    .tuto-lede {
+        font-size: 16px;
+    }
+    .tuto-pick {
+        margin-top: 44px;
+    }
+    .tuto-ticket {
+        grid-template-columns: 1fr;
+    }
+    .tuto-ticket-visual {
+        aspect-ratio: 4 / 3;
+    }
+    .tuto-ticket-body {
+        padding: 24px 22px 24px;
+    }
+    .tuto-ticket-index {
+        font-size: 40px;
+    }
+    .tuto-studio-area {
+        padding: 70px 0;
+    }
+    .tuto-studio-head {
+        margin-bottom: 26px;
+    }
+    .tuto-toolbar {
+        width: 100%;
+        flex-direction: column;
+        gap: 14px;
+    }
+    .tuto-seg {
+        width: 100%;
+    }
+    .tuto-stage {
+        gap: 22px;
+
+        &.is-landscape,
+        &.is-portrait {
+            grid-template-columns: minmax(0, 1fr);
+            grid-template-areas: "player" "now" "rail";
+        }
+    }
+    .tuto-player {
+        border-radius: 18px;
+
+        .is-portrait & {
+            width: min(100%, 400px);
+            max-height: none;
+            border-radius: 26px;
+        }
+    }
+    .tuto-play {
+        width: 72px;
+        height: 72px;
+        font-size: 28px;
+    }
+    .tuto-poster-label {
+        left: 16px;
+        bottom: 16px;
+
+        strong {
+            font-size: 17px;
+        }
+    }
+    .tuto-controls {
+        padding: 40px 8px 6px;
+    }
+    .tuto-bar {
+        gap: 0;
+
+        button {
+            min-width: 36px;
+            height: 36px;
+            font-size: 18px;
+        }
+        .tuto-bar-step {
+            display: none;
+        }
+    }
+    .tuto-scrub {
+        display: none;
+    }
+    .tuto-now {
+        gap: 16px;
+
+        .is-portrait & {
+            flex-direction: row;
+            padding: 0;
+        }
+    }
+    .tuto-now-num,
+    .is-portrait .tuto-now-num {
+        font-size: 72px;
+    }
+    .tuto-now-body p {
+        font-size: 15px;
+    }
+    .tuto-rail {
+        padding: 14px 6px 6px 12px;
+
+        ol {
+            grid-template-columns: 1fr;
+        }
+    }
+    .tuto-strip-intro {
+        margin-bottom: 36px;
+        font-size: 15px;
+    }
+    .tuto-strip-lead {
+        display: none;
+    }
+    .tuto-card {
+        width: 78vw;
+    }
+    .tuto-help-main,
+    .tuto-help-tip {
+        padding: 28px 22px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tuto-word > span,
+    .tuto-lede,
+    .tuto-ticket,
+    .tuto-swap,
+    .tuto-hero-deco span,
+    .tuto-pick i {
+        animation: none;
+    }
+}
