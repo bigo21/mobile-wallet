@@ -1,11 +1,11 @@
 // The presentation PDFs. Inlined into the server bundle: works on any host and keeps
 // them off the public site. To update one, replace the file with the same name.
-import presentationEn from '#lib/server/documents/presentation-en.pdf?inline';
-import presentationFr from '#lib/server/documents/presentation-fr.pdf?inline';
+import presentationEn from '#lib/server/documents/Mobile Wallet - Introduction Deck (EN).pdf?inline';
+import presentationFr from '#lib/server/documents/Mobile Wallet - Deck introductif (FR).pdf?inline';
 
 export const documents = {
-	en: { file: presentationEn, filename: 'MobileWallet-Franchise-Presentation-EN.pdf', pages: 15 },
-	fr: { file: presentationFr, filename: 'MobileWallet-Presentation-Franchise-FR.pdf', pages: 15 }
+	en: { file: presentationEn, filename: 'MobileWallet-Introduction-Deck-EN.pdf', pages: 10 },
+	fr: { file: presentationFr, filename: 'MobileWallet-Deck-Introductif-FR.pdf', pages: 10 }
 };
 
 export type DocumentLanguage = keyof typeof documents;

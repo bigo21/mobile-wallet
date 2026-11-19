@@ -48,8 +48,8 @@ then dropped.)
 Email templates live in `src/lib/server/email-templates.ts` (no dependencies, so they
 can be rendered on their own). The presentation PDFs are in `src/lib/server/documents/`
 and are bundled into the server code, not published as public files — replace
-`presentation-en.pdf` / `presentation-fr.pdf` (and update `pages` in
-`src/lib/server/documents.ts`) to change them.
+`Mobile Wallet - Introduction Deck (EN).pdf` / `Mobile Wallet - Deck introductif (FR).pdf`
+(and update `pages` in `src/lib/server/documents.ts`) to change them.
 
 ## Leads admin
 
